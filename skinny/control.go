@@ -2,6 +2,9 @@ package skinny
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
 
 	pb "github.com/danrl/skinny/proto/control"
 )
@@ -27,4 +30,10 @@ func (in *Instance) Status(ctx context.Context, req *pb.StatusRequest) (*pb.Stat
 	}
 
 	return &status, nil
+}
+
+func (in *Instance) StatusHttp(w http.ResponseWriter, request *http.Request) {
+	status, _ := in.Status(request.Context(), &pb.StatusRequest{})
+	jsonString, _ := json.Marshal(status)
+	fmt.Fprintf(w, "%s", string(jsonString))
 }

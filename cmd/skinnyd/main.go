@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"net"
+	"net/http"
 	"os"
 
 	"github.com/danrl/skinny/config"
@@ -11,6 +12,7 @@ import (
 	"github.com/danrl/skinny/proto/control"
 	"github.com/danrl/skinny/proto/lock"
 	"github.com/danrl/skinny/skinny"
+	"github.com/soheilhy/cmux"
 	"google.golang.org/grpc"
 )
 
@@ -42,6 +44,8 @@ func main() {
 
 	// register and serve protocols
 	grpcServer := grpc.NewServer()
+	httpServer := &http.Server{	}
+	http.HandleFunc("/", in.StatusHttp)
 	consensus.RegisterConsensusServer(grpcServer, in)
 	lock.RegisterLockServer(grpcServer, in)
 	control.RegisterControlServer(grpcServer, in)
@@ -52,7 +56,14 @@ func main() {
 		fmt.Fprintf(os.Stderr, "listen: %v", err)
 		os.Exit(1)
 	}
-	err = grpcServer.Serve(listener)
+
+	m := cmux.New(listener)
+	httpL := m.Match(cmux.HTTP1Fast())
+	grpcL := m.Match(cmux.HTTP2())
+	go grpcServer.Serve(grpcL)
+	go httpServer.Serve(httpL)
+
+	err = m.Serve()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "serve: %v", err)
 		os.Exit(1)
