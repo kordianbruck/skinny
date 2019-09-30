@@ -14,6 +14,7 @@ message StatusResponse {
     string Holder = 6;
     message Peer {
         string Name = 1;
+        string Address = 2;
     }
     repeated Peer Peers = 7;
 }

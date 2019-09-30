@@ -114,7 +114,7 @@ func TestInstanceAddPeer(t *testing.T) {
 
 	client := consensus.NewConsensusClient(peer1.conn)
 
-	err := leader.in.AddPeer(peer1.in.name, client)
+	err := leader.in.AddPeer(peer1.in.name, "", client)
 	if err != nil {
 		t.Fatalf("expected `%v`, got `%v`", nil, err)
 	}
@@ -132,14 +132,14 @@ func TestInstanceAddPeer(t *testing.T) {
 	})
 
 	t.Run("duplicate peer name", func(t *testing.T) {
-		err := leader.in.AddPeer(peer1.in.name, nil)
+		err := leader.in.AddPeer(peer1.in.name, "", nil)
 		if err != ErrDuplicatePeer {
 			t.Errorf("expected `%v`, got `%v`", ErrDuplicatePeer, err)
 		}
 	})
 
 	t.Run("duplicate peer client", func(t *testing.T) {
-		err := leader.in.AddPeer("totally-different", client)
+		err := leader.in.AddPeer("totally-different", "", client)
 		if err != ErrDuplicatePeer {
 			t.Errorf("expected `%v`, got `%v`", ErrDuplicatePeer, err)
 		}

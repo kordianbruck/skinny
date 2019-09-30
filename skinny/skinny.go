@@ -25,8 +25,9 @@ type Instance struct {
 }
 
 type peer struct {
-	name   string
-	client pb.ConsensusClient
+	name    string
+	address string
+	client  pb.ConsensusClient
 }
 
 var (
@@ -47,7 +48,7 @@ func New(name string, increment uint64, timeout time.Duration) *Instance {
 }
 
 // AddPeer adds a new peer to the peer list
-func (in *Instance) AddPeer(name string, client pb.ConsensusClient) error {
+func (in *Instance) AddPeer(name, address string, client pb.ConsensusClient) error {
 	in.mu.Lock()
 	defer in.mu.Unlock()
 
@@ -60,8 +61,9 @@ func (in *Instance) AddPeer(name string, client pb.ConsensusClient) error {
 
 	// add peer to the peer list
 	in.peers = append(in.peers, peer{
-		name:   name,
-		client: client,
+		name:    name,
+		address: address,
+		client:  client,
 	})
 	fmt.Printf("added peer %v\n", name)
 

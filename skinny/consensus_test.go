@@ -130,14 +130,14 @@ func TestInstancePropose(t *testing.T) {
 
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
 
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -158,7 +158,7 @@ func TestInstancePropose(t *testing.T) {
 
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -166,7 +166,7 @@ func TestInstancePropose(t *testing.T) {
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
 		peer2.latency = 500 * time.Millisecond
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -187,7 +187,7 @@ func TestInstancePropose(t *testing.T) {
 
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -195,7 +195,7 @@ func TestInstancePropose(t *testing.T) {
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
 		peer2.latency = 500 * time.Millisecond // to make sure we learn from peer1 before reaching a majority
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -233,14 +233,14 @@ func TestInstanceCommit(t *testing.T) {
 
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
 
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -270,7 +270,7 @@ func TestInstanceCommit(t *testing.T) {
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
 		peer1.latency = 500 * time.Millisecond
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -278,7 +278,7 @@ func TestInstanceCommit(t *testing.T) {
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
 		peer2.latency = 500 * time.Millisecond
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -307,7 +307,7 @@ func TestInstanceCommit(t *testing.T) {
 
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -315,7 +315,7 @@ func TestInstanceCommit(t *testing.T) {
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
 		peer2.fail = true
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}

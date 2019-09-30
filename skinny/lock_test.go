@@ -60,7 +60,7 @@ func TestInstanceAcquireRPC(t *testing.T) {
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
 		peer1.latency = 2 * time.Second
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -68,7 +68,7 @@ func TestInstanceAcquireRPC(t *testing.T) {
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
 		peer2.latency = 2 * time.Second
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -128,7 +128,7 @@ func TestInstanceReleaseRPC(t *testing.T) {
 		peer1 := newMockInstance(t, "peer-1", 2, time.Second)
 		defer peer1.destroy()
 		peer1.latency = 2 * time.Second
-		err := leader.in.AddPeer(peer1.in.name, consensus.NewConsensusClient(peer1.conn))
+		err := leader.in.AddPeer(peer1.in.name, "", consensus.NewConsensusClient(peer1.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}
@@ -136,7 +136,7 @@ func TestInstanceReleaseRPC(t *testing.T) {
 		peer2 := newMockInstance(t, "peer-2", 3, time.Second)
 		defer peer2.destroy()
 		peer2.latency = 2 * time.Second
-		err = leader.in.AddPeer(peer2.in.name, consensus.NewConsensusClient(peer2.conn))
+		err = leader.in.AddPeer(peer2.in.name, "", consensus.NewConsensusClient(peer2.conn))
 		if err != nil {
 			t.Fatalf("add peer: %v", err)
 		}

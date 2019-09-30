@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/danrl/skinny/web"
 	"net"
 	"net/http"
 	"os"
@@ -34,7 +35,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "dial: %v", err)
 			os.Exit(1)
 		}
-		err = in.AddPeer(peer.Name, consensus.NewConsensusClient(conn))
+		err = in.AddPeer(peer.Name, peer.Address, consensus.NewConsensusClient(conn))
 		if err != nil {
 			conn.Close()
 			fmt.Fprintf(os.Stderr, "add peer `%v`: %v", peer.Name, err)
@@ -44,8 +45,10 @@ func main() {
 
 	// register and serve protocols
 	grpcServer := grpc.NewServer()
-	httpServer := &http.Server{	}
-	http.HandleFunc("/", in.StatusHttp)
+	httpServer := &http.Server{}
+	http.HandleFunc("/status", in.StatusHttp)
+	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(web.Box)))
+	http.HandleFunc("/", web.ServeStatusPage)
 	consensus.RegisterConsensusServer(grpcServer, in)
 	lock.RegisterLockServer(grpcServer, in)
 	control.RegisterControlServer(grpcServer, in)
